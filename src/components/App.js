@@ -1,7 +1,7 @@
 import React from 'react';
-import './scss/App.scss';
-
 import JoggingsList from './JoggingsList';
+
+import './scss/App.scss';
 
 const App = () =>{
     return (

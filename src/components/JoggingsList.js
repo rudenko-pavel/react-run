@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
+import  { connect } from 'react-redux';
+import { fetchJoggings } from '../actions';
+
 import './scss/JoggingsList.scss';
 
-import  { connect } from 'react-redux';
-import { selectJogging } from '../actions';
-
 class JoggingsList extends Component {
+    componentDidMount(){
+        this.props.fetchJoggings();
+    }
+
     render(){
-        console.log( "JoggingsList: ");
+        console.log( "JoggingsList: ", this.props.joggings);
         return (
             <div className="joggings-list">
-                JoggingsList
+                JoggingsList: 
             </div>
         );
     }
 }
 
-export default connect(null,{
-    selectJogging: selectJogging
+const mapStateToProps = (state) =>{ // see to `src/reducers/index.js`
+    return { joggings: state.joggings};
+}
+
+export default connect(mapStateToProps,{
+    fetchJoggings: fetchJoggings
 })(JoggingsList);
