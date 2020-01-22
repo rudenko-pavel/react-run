@@ -1,14 +1,15 @@
 import React from 'react';
-import JoggingsList from './JoggingsList';
-
 import './scss/App.scss';
 
+import JoggingsList from './JoggingsList/JoggingsList';
+
 const App = () =>{
-    return (
-        <div className="ui container">
-            App
-            <JoggingsList />
-        </div>
+    return(
+        <div className="ui container grid">
+            <div className="column sixteen wide">
+                <JoggingsList />
+            </div>
+        </div> 
     )
 };
 

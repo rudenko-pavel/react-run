@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import joggingReducer from './joggingReducer';
+import joggingsReducer from './joggingsReducer';
 
 export default combineReducers({
-    joggings: joggingReducer
+    joggings: joggingsReducer
 });
