@@ -1,4 +1,5 @@
 import myJson from '../apis/json';
+import _ from 'lodash';
 
 // for JoggingsList
 export const fetchJoggings = () => async dispatch =>{
@@ -7,3 +8,13 @@ export const fetchJoggings = () => async dispatch =>{
     console.log("responce: ",responce);
     dispatch( {type: 'FETCH_JOGGINGS', payload: responce.data.joggings     } )
 };
+
+const _fetchCity = _.memoize(async(id, dispatch) => {
+    const responce = await myJson.get(`/cities.json`);
+    const el = responce.data.cities.find((el) => el.id === id);
+    dispatch ( { type: 'FETCH_CITY', payload: el} )
+});
+
+export const fetchCity = (id) => dispatch =>{
+    _fetchCity(id, dispatch);
+}

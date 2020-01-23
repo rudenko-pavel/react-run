@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchJoggings } from '../../actions';
 
 import './JoggingsList.scss';
+import RunCity from '../RunCity/RunCity';
 
 class JoggingsList extends Component{
     componentDidMount (){
@@ -36,6 +37,7 @@ class JoggingsList extends Component{
                     <td><p>{this.timestampToDate(jogging.date)}</p></td>
                     <td><p>{jogging.distance}</p></td>
                     <td><p>{this.secondsToFullTime(jogging.time)}</p></td>
+                    <td><RunCity cityId={jogging.cityId} /></td>
                 </tr>
             );
         });
@@ -46,7 +48,15 @@ class JoggingsList extends Component{
         return( 
             <table className="ui celled striped table">
                 <thead>
-                    <tr><th colSpan="4">My joggings</th></tr></thead>
+                    <tr className="one-item"><th colSpan="5">My joggings</th></tr>
+                    <tr className="one-item">
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Full distance</th>
+                        <th>Full time</th>
+                        <th>City</th>
+                    </tr>
+                </thead>
                 <tbody>
                     {this.renderList()}
                 </tbody>

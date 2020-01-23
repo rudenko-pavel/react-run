@@ -1,0 +1,8 @@
+{
+    "cities" : [
+        {"id": 1, "name": "Kyiv"},
+        {"id": 2, "name": "Chisinau"},
+        {"id": 3, "name": "Sumy"},
+        {"id": 4, "name": "Poltava"}
+    ]
+}

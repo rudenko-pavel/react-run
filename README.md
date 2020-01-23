@@ -120,9 +120,9 @@
 
 12. Edit `src/actions/index.js`:
 	## добавляем API в наш `action Creator`:
-	import jsonFakejson from '../apis/jsonFakejson';
+	import myJson from '../apis/json';
     export const fetchJoggings = () => async dispatch =>{
-        const responce = await jsonFakejson.get('/joggings.json');
+        const responce = await myJson.get('/joggings.json');
         dispatch( {type: 'FETCH_JOGGINGS', payload: responce.data.joggings } )
     };
 
@@ -228,7 +228,7 @@
     );
 
 21. Edit `src/components/JoggingsList/JoggingsList.js`:
-	## изменение отображения данных. Вначале - послейдние события:
+	## изменение отображения данных. Вначале - последние события:
 	renderList(){
         const reverceJoggings = this.props.joggings.reverse();
         return reverceJoggings.map(jogging =>{
@@ -242,81 +242,200 @@
         });
     };
 
+## **************************************************************************************************** ##
+   *** CHECKPOINT #1: *** 
+## **************************************************************************************************** ##
+
 # STEP 5. Добавляем данные из второго JSON:
 
+	## извлечение данных из второго JSON по ключу в первом   
+	## (1: [{id:1, cityId:1}])
+	## (2: [{"id": 1, "name": "Kyiv"},{"id": 2, "name": "Chisinau"}) 
+
+22. Add `public/json/cities.json`:
+    {
+        "cities" : [
+            {"id": 1, "name": "Kyiv"},
+            {"id": 2, "name": "Chisinau"},
+            {"id": 3, "name": "Sumy"},
+            {"id": 4, "name": "Poltava"}
+        ]
+    }
+
+23. Edit `public/json/joggings.json`
+    ## добавляем поле `cityId`:
+    ...
+    {"id": 1,   "cityId": 1,  "date":"1506891600", "distance":2260, ... },
+    {"id": 2,   "cityId": 1,  "date":"1507064400", "distance":5250, ... } 
+    ...
+24. Edit `src/components/JoggingsList/JoggingsList.js`
+    ## Добавляем новое поле `cityId` в `render()`:
+    <tr key={jogging.id} className="one-item" >
+        ...
+        <td><p>{jogging.cityId}</p></td>
+    </tr>
+
+	## Для отображения названия города (данные из второго JSON), создаем компонент `RunCity` 
+25. Create `src/components/RunCity/RunCity.js`, `src/components/RunCity/RunCity.scss` 
+	import React, { Component } from 'react';
+	import './RunCity.scss';
+
+	class RunCity extends Component{
+		render(){
+			return (
+				<div className="header">
+					RunCity
+				</div>
+			)
+		}
+	}
+
+	export default RunCity;
+
+26. Edit `src/components/JoggingsList/JoggingsList.js`
+	## в компонент `RunCity` будем передавать `cityId` в виде `props`. 
+    <tr key={jogging.id} className="one-item" >
+        ...
+        <td><RunCity cityId={jogging.cityId} /></td>
+    </tr>
+
+27. Edit `src/components/JoggingsList/JoggingsList.js`:
+	## import
+	import RunCity from '../RunCity/RunCity';
+
+28. Edit `src/actions/index.js`:
+    ## Add new action:
+	export const fetchCity = id => async dispatch => {
+		const responce = await myJson.get(`/cities.json`);
+		const el = responce.data.cities.find((el) => el.id === id);
+
+		dispatch ( { type: 'FETCH_CITY', payload: el} )
+	};
+
+29. Edit `src/components/RunCity/RunCity.js`:
+	## функция connect() создает для нас компонент.
+	import { connect } from 'react-redux';
+	import { fetchCity } from '../../actions';
+	...
+	## where function `mapStateToProps()` not created, call `null`
+	export default connect (null, {fetchCity})(RunCity);
+
+30. Edit `src/components/RunCity/RunCity.js`:
+	## componentDidMount
+    componentDidMount(){
+        this.props.fetchCity(this.props.cityId);
+    }
+	## теперь, когда наш компонент `RunCity` отображается на экране, мы можем вызывать `action Creator`
+
+31. Create `src/reducers/citiesReducer.js`:
+	## - Create `Reducer`. 
+	## ***** DEFAULT SYNTAXIS ***** 
+	export default (state=[], action) =>{
+		switch (action.type){ // see to `src/actions/index.js`
+			case 'FETCH_CITY':
+				return [...state,action.payload];
+			default: 
+				return state;
+		}
+	};
+
+32. Edit `src/reducers/index.js`:
+	## import
+	import citiesReducer from './citiesReducer';
+	...
+	export default combineReducers({ 
+		joggings: joggingsReducer,
+		cities: citiesReducer		// add this string
+	});
+
+33. Edit `src/components/RunCity/RunCity.js`:
+	## добавляем функцию `mapStateToProps`
+	## функция `mapStateToProps` - функция, которая возвращает либо обычный объект, либо другую функцию 
+	## функция `mapStateToProps` будет вызываться каждый раз, когда состояние хранилища изменяется.
+	## Функция `mapStateToProps` объявляется с двумя параметрами, второй из которых является необязательным. 
+	## Первый параметр представляет собой текущее состояние хранилища Redux. 
+	## Второй параметр, если его передают, представляет собой объект свойств, переданных компоненту
+	
+	const mapStateToProps = (state) =>{
+		return {cities: state.cities}
+	};
+		
+	export default connect (mapStateToProps, {fetchCity})(RunCity);
+
+34. Edit `src/components/RunCity/RunCity.js` в `render()`:	
+	## возвращаем имя (`name`) из объекта, в котором `id`== props.cityId
+    const city = this.props.cities.find((city) => city.id === this.props.cityId);
+    if (!city){ return null; }
+	return ( <div className="header">{city.name}</div> )
 
 
+## **************************************************************************************************** ##
+
+	## Название города (и остальные поля из второго JSON) мы получили. Но есть вопрос к производительности.
+	## При отрисовке каждого поста, идет запрос на название города.  (вызов `render` в `RunCity.js`)
+	## Т.е. при отображении 100 постов, мы 100 раз отправляем запрос на получение имени  (XHR-request - see to console)
+	## если городов - 100, уменьшить количество запросов не получится, а если городов - 10, это делать необходимо. 
+	
+	## Для уменьшения количества запросов - переносим логику в `mapStateToProps` (Extracting Logic to MapStateToProps):
+
+35. Edit `src/components/RunCity/RunCity.js`:
+	## переносим функцию фильтра из `render` в `mapSteteToProps`:
+        
+	// const user = this.props.users.find((user) => user.id === this.props.userId);
+	if (!user){ return null;}	
+	...
+	
+	const mapStateToProps = (state, ownProps) =>{				// не окончательный код
+		return {cities: state.cities.find((city) => city.id === this.props.cityId)}
+	};
+
+	## Но `this.props.cityId` не относится к общему `state`. Это переменная из компонента
+	## Поэтому, как второй аргумент, вносим в функцию `mapStateToProps` собственное состояние (доступное в Компоненте `RunCity` ): 
+	const mapStateToProps = (state, ownProps) =>{
+		## вместо `cities` - `city` , поскольку выдаем одного пользователя по фильтру
+		return {city: state.cities.find((city) => city.id === ownProps.cityId)}
+	};
+
+	## изменения в `render`:
+	render(){
+		const { city } = 	this.props;
 
 
-## ########################################################################## ##
-## ########################################################################## ##
-## ########################################################################## ##
+## **************************************************************************************************** ##
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+	## Уменьшение количества запросов - это устранение дублирующих запросов
+	## т.е., если данные про город с sityId=5 мы получили, то второй,... раз про этот город мы данные не запрашиваем
 
-## Available Scripts
+	## ******* SOLUTION  start ***************
+	## Memoizing Functions
+	## `memoize` - Возвращает функцию, которая кэширует результаты своего выполнения, и не выполняется, если результат есть в кэше.
 
-In the project directory, you can run:
+36. console `npm install --save lodash`
+	## - Lodash - это библиотека, с набором полезных функций, для работы с данными, для конвертирования их из одного формата в другой, фильтрации, маппинга и других вещей.
 
-### `npm start`
+37. Edit `src/actions/index.js`:
+	## import библиотеки:
+	import _ from 'lodash';	
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+38. Edit `src/actions/index.js`:
+	## `memoize` нашего `action creator` (fetchUser):
+	
+	## Создаем функцию `_fetchUser` с использованием функции `memoize`
+	## `_fetchUser` - `_...` говорит о том, что функция является `private` 
+	## переносим в нее содержимое функции `fetchUser`: 
+	const _fetchCity = _.memoize(async(id, dispatch) => {
+		const responce = await myJson.get(`/cities.json`);
+		const el = responce.data.cities.find((el) => el.id === id);
+		dispatch ( { type: 'FETCH_CITY', payload: el} )
+	});
+	
+	## а в фнкции `fetchUser` использум memoize-версию функции `_fetchUser` (без дублирущих записей)
+	export const fetchCity = (id) => dispatch =>{
+		_fetchCity(id, dispatch);
+	}
+	## ******* SOLUTION  end ***************	
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## **************************************************************************************************** ##
+   *** CHECKPOINT #2: *** 
+## **************************************************************************************************** ##
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
