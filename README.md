@@ -439,3 +439,88 @@
    *** CHECKPOINT #2: *** 
 ## **************************************************************************************************** ##
 
+# STEP 6. Добавляем рероутинг:
+39. console
+	## добавляем библиотеку в зависимости:
+	npm install --save react-router-dom
+
+7. Edit `src/components/App.js`:
+	## import
+	import { BrowserRouter, Route } from 'react-router-dom';
+
+## создаем компонент `HeaderMenu`:
+8. Create `src/components/HeaderMenu/HeaderMenu.scss`, `src/components/HeaderMenu/HeaderMenu.js`
+	import React, { Component } from 'react';
+	import './HeaderMenu.scss';
+	class HeaderMenu extends Component{
+		render(){
+			return( 
+				<div className = "HeaderMenu">
+					Header Menu
+				</div>
+			);
+		}
+	}
+	export default HeaderMenu;
+
+9. Create `src/components/Strava/Strava.scss`, `src/components/Strava/Strava.js`
+		import React, { Component } from 'react';
+		import './Strava.scss';
+
+		class Strava extends Component{
+			render(){
+				return( 
+					<div className = "Strava">
+						Strava
+					</div>
+				);
+			}
+		}
+		export default Strava;
+
+11. Edit `src/component/App.js`:
+	## Импортируем созданные компоненты:
+	import Strava from './Strava/Strava';
+	import HeaderMenu from './HeaderMenu/HeaderMenu';
+
+12. Edit `src/component/App.js`:
+	## добавляем экземпляр BrowserRouter:
+	return(
+		<div className="ui container">
+			<BrowserRouter>
+				<div>
+					<HeaderMenu />
+					<Route path="/" exact component={JoggingsList} />
+					<Route path="/strava" exact component={Strava} />
+				</div>
+			</BrowserRouter>
+		</div>
+	)
+
+13. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+		## add css:
+		render(){
+			return( 
+				<div className="row">
+					<div className = "column HeaderMenu">
+						<div className="ui buttons">
+							<a href="/" className = "ui button">joggings</a>
+							<a href="/strava" className = "ui button">strava</a>
+						</div>
+					</div>
+				</div>
+			);
+		}
+
+14. Edit `src/component/HeaderMenu/HeaderMenu.js`:
+	## import `Link`
+	import { Link } from 'react-router-dom';
+
+15. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+	## меняем тег `<a>` на тег `<Link>`
+    <Link  to="/" className = "ui basic blue button">joggings</Link >
+    <Link  to="/strava" className = "ui basic blue button">strava</Link >
+
+## **************************************************************************************************** ##
+   *** CHECKPOINT #3: *** 
+## **************************************************************************************************** ##

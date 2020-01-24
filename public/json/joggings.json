@@ -141,6 +141,7 @@
 	{"id": 139, "cityId": 1,  "date":"1578877200", "distance":7140, "time":3111, "slides": 0 , "isCompetition": false , "parts":[369,420,435,431,455,464,469]},
 	{"id": 140, "cityId": 1,  "date":"1579050000", "distance":5110, "time":2220, "slides": 0 , "isCompetition": false , "parts":[413,421,438,436,460]},
 	{"id": 141, "cityId": 1,  "date":"1579222800", "distance":5090, "time":2301, "slides": 0 , "isCompetition": false , "parts":[402,419,469,468,497]},
-	{"id": 142, "cityId": 1,  "date":"1579568400", "distance":10230,"time":4756, "slides": 0 , "isCompetition": false , "parts":[423,444,465,455,444,482,470,495,474,471]}
+	{"id": 142, "cityId": 1,  "date":"1579568400", "distance":10230,"time":4756, "slides": 0 , "isCompetition": false , "parts":[423,444,465,455,444,482,470,495,474,471]},
+	{"id": 143, "cityId": 1,  "date":"1579741200", "distance":7150, "time":3116, "slides": 0 , "isCompetition": false , "parts":[406,425,435,422,445,456,456]}
   ]
 }

@@ -1,0 +1,10 @@
+.HeaderMenu{
+    padding: 20px;
+    border-bottom: 1px dotted grey;
+    display: flex;
+    align-items: center;
+    div{
+        display: block !important;
+        margin: 0 auto !important;
+    }
+}
