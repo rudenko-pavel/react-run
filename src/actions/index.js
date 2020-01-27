@@ -18,3 +18,10 @@ const _fetchCity = _.memoize(async(id, dispatch) => {
 export const fetchCity = (id) => dispatch =>{
     _fetchCity(id, dispatch);
 }
+
+
+// for HeaderMenu
+export const fetchHeaderMenu = () => async dispatch =>{
+	const responce = await myJson.get('/headermenu.json');
+	dispatch( {type: 'FETCH_HEADERMENU', payload: responce.data.headermenu } )
+};

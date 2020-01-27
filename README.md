@@ -524,3 +524,135 @@
 ## **************************************************************************************************** ##
    *** CHECKPOINT #3: *** 
 ## **************************************************************************************************** ##
+
+
+## создаем компонент `About` (отдельная страница):
+16. Create `src/components/About/About.scss`, `src/components/About/About.js`
+	import React, { Component } from 'react';
+	import './About.scss';
+	class About extends Component{
+		render(){
+			return( 
+				<div className = "About">
+					About
+				</div>
+			);
+		}
+	}
+	export default About;
+
+## ***************** Change menu according to the rules REDUX Cycle ************************* ##
+	## Action Creator - to change state of our app
+	## Action 
+	## dispatch 
+	## Middleware 
+	## Reducers 
+	## State 
+
+16. Create `public/json/headermenu.json`
+	## create file with data (menu items):
+	{
+		"headermenu" : [
+			{"id": 1, "name": "about", 		"link": "/"},
+			{"id": 2, "name": "joggings", 	"link": "/joggings"},
+			{"id": 3, "name": "strava", 	"link": "/strava"}
+		]
+	}
+
+17. Edit `src/actions/index.js`
+## `Action creator` + `Action`:
+export const fetchHeaderMenu = () => async dispatch =>{
+	const responce = await myJson.get('/headermenu.json');
+	dispatch( {type: 'FETCH_HEADERMENU', payload: responce.data.headermenu } )
+};
+
+18. Create `src/reducers/headermenuReducer.js`
+	export default () => {
+		return 'replaceMe';
+	}
+
+19. Edit `src/reducers/index.js`
+	## import
+	import headermenuReducer from './headermenuReducer';
+	...
+	export default combineReducers({
+		headermenu: headermenuReducer
+	});
+
+20. Edit `src/reducers/headermenuReducer.js`
+	## Switch Statements in Reducers:
+	export default (state=[], action) => {
+		switch (action.type){ // see to `src/actions/index.js`
+			case 'FETCH_HEADERMENU':
+				return action.payload;
+			
+			default: 
+				return state;
+		}
+	}
+
+21. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+	## функция connect() создает для нас компонент. 
+	import { fetchHeaderMenu } from '../../actions';
+	import { connect } from 'react-redux';
+	...
+	componentDidMount (){
+		this.props.fetchHeaderMenu();
+    };
+	...
+	## dispatching correct values - получаем значения
+	const mapStateToProps = (state) =>{ // see to `src/reducers/index.js`
+		return { 
+			headermenu: state.headermenu
+		};
+	}
+
+	export default connect(mapStateToProps,{
+		fetchHeaderMenu: fetchHeaderMenu 		// see to `src/actions/index.js`
+	})(HeaderMenu);
+	
+	## список кнопочек мы получили
+	render(){
+		// console.log("HeaderMenu(fetchHeaderMenu)", this.props.headermenu);
+
+22. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+	## вывод данных на экран
+	## создаем функцию, которая перебирает элементы масасива, который мы получили в `this.props.menuitems`
+	## добавляем css: 
+    renderList(){
+        return this.props.headermenu.map(headermenu =>{
+            return (
+                <Link to={headermenu.link} className = "ui button" key={headermenu.id}>
+                    {headermenu.name}
+                </Link>
+            );
+        });
+    }
+
+	## выводим на экран результат выполнения функции:
+    return( 
+        <div className="row">
+            <div className = "column HeaderMenu">
+                <div className="ui basic buttons">
+                    {this.renderList()}
+                </div>
+            </div>
+        </div>
+    );
+
+23. Edit `src/App.js`:
+	## добавляем ссылку на новый компонент
+	import About from './About/About';
+	...
+	<BrowserRouter>
+		<div>
+            <HeaderMenu />
+			<Route path="/" exact 		component={About} />
+			<Route path="/joggings"  	component={JoggingsList} />
+			<Route path="/strava"  		component={Strava} />
+		</div>
+	</BrowserRouter>
+
+## **************************************************************************************************** ##
+   *** Change menu according to the rules REDUX Cycle *** 
+## **************************************************************************************************** ##
