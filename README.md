@@ -88,7 +88,7 @@
 		fetchJoggings: fetchJoggings
 	})(JoggingsList);
 
-9. Create `src/reducers/index.js`
+9. Create `src/reducers/index.js`:
 	## если нет данных для передачи, мы все-равно должны что-то передавать.
 	## Поэтому или убираем `import reducers from './reducers';` или добавлем `dummy reducers`:
     import { combineReducers } from 'redux';
@@ -655,4 +655,65 @@ export const fetchHeaderMenu = () => async dispatch =>{
 
 ## **************************************************************************************************** ##
    *** Change menu according to the rules REDUX Cycle *** 
+## **************************************************************************************************** ##
+
+## add `selectedItemMenu`:  
+
+24. Edit `src/actions/index.js` (Action creator): 
+	export const selectItemMenu = id => {
+	  return {
+		// Return an action
+		type: "ITEMMENU_SELECTED",
+		payload: id
+	  };
+	};
+
+25. Create `src/reducers/menuselectedReducer.js`:     
+	## возможные варианты `action.type` берутся из `src/actions/index.js`
+	export default (selectedItem = 1, action) => {
+		switch (action.type) {
+			// see to `src/actions/index.js`
+			case "ITEMMENU_SELECTED":
+			return action.payload;
+			default:
+			return selectedItem;
+		}
+	};
+
+26. Edit `src/reducers/index.js`:
+	import menuselectedReducer from "./menuselectedReducer";
+	...
+	export default combineReducers({
+		menuitems: menuitemsReducer, 
+		menuselected: menuselectedReducer			// add thsis string
+	});
+
+27. Add to `src/component/HeaderMenu.js`:
+	import { fetchHeaderMenu, selectItemMenu } from "../../actions";
+	...
+	export default connect(mapStateToProps, {fetchHeaderMenu, selectItemMenu})(HeaderMenu);
+
+28. Edit `src/component/HeaderMenu.js`:
+	renderList() {
+		let currentItemMenu = "";
+		return this.props.headermenu.map(headermenu => {
+		// eslint-disable-next-line no-unused-expressions
+		headermenu.id === this.props.menuselected
+			? (currentItemMenu = "blue basic")
+			: (currentItemMenu = "");
+		return (
+			<Link
+			to={headermenu.link}
+			className={`ui button ${currentItemMenu}`}
+			key={headermenu.id}
+			onClick={() => this.props.selectItemMenu(headermenu.id)}
+			>
+			{headermenu.name}
+			</Link>
+		);
+		});
+	}
+
+## **************************************************************************************************** ##
+   *** Add `selectItem` to HeaderMenu *** 
 ## **************************************************************************************************** ##

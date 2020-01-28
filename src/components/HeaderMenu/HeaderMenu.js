@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { fetchHeaderMenu } from "../../actions";
+import { fetchHeaderMenu, selectItemMenu } from "../../actions";
 
 class HeaderMenu extends Component {
   componentDidMount() {
@@ -12,9 +12,19 @@ class HeaderMenu extends Component {
   }
 
   renderList() {
+    let currentItemMenu = "";
     return this.props.headermenu.map(headermenu => {
+      // eslint-disable-next-line no-unused-expressions
+      headermenu.id === this.props.menuselected
+        ? (currentItemMenu = "blue basic")
+        : (currentItemMenu = "");
       return (
-        <Link to={headermenu.link} className="ui button" key={headermenu.id}>
+        <Link
+          to={headermenu.link}
+          className={`ui button ${currentItemMenu}`}
+          key={headermenu.id}
+          onClick={() => this.props.selectItemMenu(headermenu.id)}
+        >
           {headermenu.name}
         </Link>
       );
@@ -32,13 +42,16 @@ class HeaderMenu extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   // see to `src/reducers/index.js`
   return {
-    headermenu: state.headermenu
+    headermenu: state.headermenu,
+    menuselected: state.menuselected
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchHeaderMenu // see to `src/actions/index.js`
+  fetchHeaderMenu,
+  selectItemMenu // see to `src/actions/index.js`
 })(HeaderMenu);
