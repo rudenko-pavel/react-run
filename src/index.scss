@@ -1,8 +1,12 @@
+@import "css/middleware";
+
 body{
     background-image: url('/images/bg.jpg') !important;
     .App{
         &.container{
             background-color: white !important;
+            border-left: 1px solid $grey-color;
+            border-right: 1px solid $grey-color;
         }
     }
 }

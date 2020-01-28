@@ -7,7 +7,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Strava from './Strava/Strava';
 import HeaderMenu from './HeaderMenu/HeaderMenu';
 import About from './About/About';
-
+ 
 const App = () =>{
 	return(
 		<div className="ui container App">

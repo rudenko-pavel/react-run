@@ -1,0 +1,58 @@
+{
+  //
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": ["jsx-a11y", "simple-import-sort", "prettier"],
+  "globals": {
+    "window": "readonly",
+    "document": "readonly"
+  },
+  "env": { "jest": true },
+  "rules": {
+    // "semi": 0, //OK: don’t use the semicolon at the end of the every statement (IMHO really annoying);
+    "camelcase": 0,
+    "react/prefer-stateless-function": 0, // todo TURN IT ON
+    "import/no-named-as-default": 0, // todo TURN IT ON
+    "import/no-named-as-default-member": 0, // import/no-named-as-default-member
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [".storybook/**", "**/*stories.js"]
+      }
+    ],
+    "react/jsx-filename-extension": [
+      //OK allow both .jsx and .js as extension for files (instead of .jsx only).
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true
+      }
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 100,
+        "tabWidth": 2,
+        "comments": 100,
+        "ignoreComments": false,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "simple-import-sort/sort": "error"
+  }
+}

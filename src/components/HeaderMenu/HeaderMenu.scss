@@ -1,6 +1,8 @@
+@import "../../css/middleware";
+
 .HeaderMenu{
     padding: 20px;
-    border-bottom: 1px dotted grey;
+    border-bottom: 1px dotted $red-color;
     display: flex;
     align-items: center;
     div{

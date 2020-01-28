@@ -1,29 +1,30 @@
-import React, { Component } from 'react';
-import './RunCity.scss';
+/* eslint-disable react/destructuring-assignment */
+import "./RunCity.scss";
 
-import { connect } from 'react-redux';
-import { fetchCity } from '../../actions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-class RunCity extends Component{
-    componentDidMount(){
-        this.props.fetchCity(this.props.cityId);
+import { fetchCity } from "../../actions";
+
+class RunCity extends Component {
+  componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    this.props.fetchCity(this.props.cityId);
+  }
+
+  render() {
+    // eslint-disable-next-line react/prop-types
+    const { city } = this.props;
+    if (!city) {
+      return null;
     }
-
-    render(){
-        const { city } = 	this.props;
-        if (!city){
-            return null;
-        }
-        return (
-            <div className="header">
-                {city.name}
-            </div>
-        )
-    }
+    // eslint-disable-next-line react/prop-types
+    return <div className="header">{city.name}</div>;
+  }
 }
 
-	const mapStateToProps = (state, ownProps) =>{
-		return {city: state.cities.find((city) => city.id === ownProps.cityId)}
-	};
-		
-	export default connect (mapStateToProps, {fetchCity})(RunCity);
+const mapStateToProps = (state, ownProps) => {
+  return { city: state.cities.find(city => city.id === ownProps.cityId) };
+};
+
+export default connect(mapStateToProps, { fetchCity })(RunCity);
