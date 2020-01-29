@@ -444,12 +444,12 @@
 	## добавляем библиотеку в зависимости:
 	npm install --save react-router-dom
 
-7. Edit `src/components/App.js`:
+40. Edit `src/components/App.js`:
 	## import
 	import { BrowserRouter, Route } from 'react-router-dom';
 
 ## создаем компонент `HeaderMenu`:
-8. Create `src/components/HeaderMenu/HeaderMenu.scss`, `src/components/HeaderMenu/HeaderMenu.js`
+41. Create `src/components/HeaderMenu/HeaderMenu.scss`, `src/components/HeaderMenu/HeaderMenu.js`
 	import React, { Component } from 'react';
 	import './HeaderMenu.scss';
 	class HeaderMenu extends Component{
@@ -463,7 +463,7 @@
 	}
 	export default HeaderMenu;
 
-9. Create `src/components/Strava/Strava.scss`, `src/components/Strava/Strava.js`
+42. Create `src/components/Strava/Strava.scss`, `src/components/Strava/Strava.js`
 		import React, { Component } from 'react';
 		import './Strava.scss';
 
@@ -478,12 +478,12 @@
 		}
 		export default Strava;
 
-11. Edit `src/component/App.js`:
+43. Edit `src/component/App.js`:
 	## Импортируем созданные компоненты:
 	import Strava from './Strava/Strava';
 	import HeaderMenu from './HeaderMenu/HeaderMenu';
 
-12. Edit `src/component/App.js`:
+44. Edit `src/component/App.js`:
 	## добавляем экземпляр BrowserRouter:
 	return(
 		<div className="ui container">
@@ -497,7 +497,7 @@
 		</div>
 	)
 
-13. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+45. Edit `src/components/HeaderMenu/HeaderMenu.js`:
 		## add css:
 		render(){
 			return( 
@@ -512,11 +512,11 @@
 			);
 		}
 
-14. Edit `src/component/HeaderMenu/HeaderMenu.js`:
+46. Edit `src/component/HeaderMenu/HeaderMenu.js`:
 	## import `Link`
 	import { Link } from 'react-router-dom';
 
-15. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+47. Edit `src/components/HeaderMenu/HeaderMenu.js`:
 	## меняем тег `<a>` на тег `<Link>`
     <Link  to="/" className = "ui basic blue button">joggings</Link >
     <Link  to="/strava" className = "ui basic blue button">strava</Link >
@@ -527,7 +527,7 @@
 
 
 ## создаем компонент `About` (отдельная страница):
-16. Create `src/components/About/About.scss`, `src/components/About/About.js`
+48. Create `src/components/About/About.scss`, `src/components/About/About.js`
 	import React, { Component } from 'react';
 	import './About.scss';
 	class About extends Component{
@@ -549,7 +549,7 @@
 	## Reducers 
 	## State 
 
-16. Create `public/json/headermenu.json`
+49. Create `public/json/headermenu.json`
 	## create file with data (menu items):
 	{
 		"headermenu" : [
@@ -559,19 +559,19 @@
 		]
 	}
 
-17. Edit `src/actions/index.js`
+50. Edit `src/actions/index.js`
 ## `Action creator` + `Action`:
 export const fetchHeaderMenu = () => async dispatch =>{
 	const responce = await myJson.get('/headermenu.json');
 	dispatch( {type: 'FETCH_HEADERMENU', payload: responce.data.headermenu } )
 };
 
-18. Create `src/reducers/headermenuReducer.js`
+51. Create `src/reducers/headermenuReducer.js`
 	export default () => {
 		return 'replaceMe';
 	}
 
-19. Edit `src/reducers/index.js`
+52. Edit `src/reducers/index.js`
 	## import
 	import headermenuReducer from './headermenuReducer';
 	...
@@ -579,7 +579,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 		headermenu: headermenuReducer
 	});
 
-20. Edit `src/reducers/headermenuReducer.js`
+53. Edit `src/reducers/headermenuReducer.js`
 	## Switch Statements in Reducers:
 	export default (state=[], action) => {
 		switch (action.type){ // see to `src/actions/index.js`
@@ -591,7 +591,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 		}
 	}
 
-21. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+54. Edit `src/components/HeaderMenu/HeaderMenu.js`:
 	## функция connect() создает для нас компонент. 
 	import { fetchHeaderMenu } from '../../actions';
 	import { connect } from 'react-redux';
@@ -615,7 +615,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 	render(){
 		// console.log("HeaderMenu(fetchHeaderMenu)", this.props.headermenu);
 
-22. Edit `src/components/HeaderMenu/HeaderMenu.js`:
+55. Edit `src/components/HeaderMenu/HeaderMenu.js`:
 	## вывод данных на экран
 	## создаем функцию, которая перебирает элементы масасива, который мы получили в `this.props.menuitems`
 	## добавляем css: 
@@ -640,7 +640,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
         </div>
     );
 
-23. Edit `src/App.js`:
+56. Edit `src/App.js`:
 	## добавляем ссылку на новый компонент
 	import About from './About/About';
 	...
@@ -659,7 +659,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 
 ## add `selectedItemMenu`:  
 
-24. Edit `src/actions/index.js` (Action creator): 
+57. Edit `src/actions/index.js` (Action creator): 
 	export const selectItemMenu = id => {
 	  return {
 		// Return an action
@@ -668,7 +668,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 	  };
 	};
 
-25. Create `src/reducers/menuselectedReducer.js`:     
+58. Create `src/reducers/menuselectedReducer.js`:     
 	## возможные варианты `action.type` берутся из `src/actions/index.js`
 	export default (selectedItem = 1, action) => {
 		switch (action.type) {
@@ -680,7 +680,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 		}
 	};
 
-26. Edit `src/reducers/index.js`:
+59. Edit `src/reducers/index.js`:
 	import menuselectedReducer from "./menuselectedReducer";
 	...
 	export default combineReducers({
@@ -688,12 +688,12 @@ export const fetchHeaderMenu = () => async dispatch =>{
 		menuselected: menuselectedReducer			// add thsis string
 	});
 
-27. Add to `src/component/HeaderMenu.js`:
+60. Add to `src/component/HeaderMenu.js`:
 	import { fetchHeaderMenu, selectItemMenu } from "../../actions";
 	...
 	export default connect(mapStateToProps, {fetchHeaderMenu, selectItemMenu})(HeaderMenu);
 
-28. Edit `src/component/HeaderMenu.js`:
+61. Edit `src/component/HeaderMenu.js`:
 	renderList() {
 		let currentItemMenu = "";
 		return this.props.headermenu.map(headermenu => {
@@ -716,4 +716,18 @@ export const fetchHeaderMenu = () => async dispatch =>{
 
 ## **************************************************************************************************** ##
    *** Add `selectItem` to HeaderMenu *** 
+## **************************************************************************************************** ##
+
+62. Add `HashRouter`:
+	##Edit `src/App.js`
+	import { HashRouter, Route } from "react-router-dom";
+		instead
+	import { BrowserRouter, Route } from "react-router-dom";
+
+	`<HashRouter></HashRouter>`
+		instead
+	`<BrowserRouter></BrowserRouter>`
+
+## **************************************************************************************************** ##
+   *** Add `HashRouter` ***  
 ## **************************************************************************************************** ##
