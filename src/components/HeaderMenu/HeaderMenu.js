@@ -2,9 +2,9 @@ import "./HeaderMenu.scss";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { fetchHeaderMenu, selectItemMenu } from "../../actions";
+import { fetchHeaderMenu } from "../../actions";
 
 class HeaderMenu extends Component {
   componentDidMount() {
@@ -12,21 +12,17 @@ class HeaderMenu extends Component {
   }
 
   renderList() {
-    let currentItemMenu = "";
     return this.props.headermenu.map(headermenu => {
-      // eslint-disable-next-line no-unused-expressions
-      headermenu.id === this.props.menuselected
-        ? (currentItemMenu = "blue basic")
-        : (currentItemMenu = "");
       return (
-        <Link
+        <NavLink
+          exact
           to={headermenu.link}
-          className={`ui button ${currentItemMenu}`}
+          className="ui button"
           key={headermenu.id}
-          onClick={() => this.props.selectItemMenu(headermenu.id)}
+          activeClassName="blue basic"
         >
           {headermenu.name}
-        </Link>
+        </NavLink>
       );
     });
   }
@@ -46,12 +42,10 @@ class HeaderMenu extends Component {
 const mapStateToProps = state => {
   // see to `src/reducers/index.js`
   return {
-    headermenu: state.headermenu,
-    menuselected: state.menuselected
+    headermenu: state.headermenu
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchHeaderMenu,
-  selectItemMenu // see to `src/actions/index.js`
+  fetchHeaderMenu // see to `src/actions/index.js`
 })(HeaderMenu);

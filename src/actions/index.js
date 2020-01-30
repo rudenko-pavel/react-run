@@ -26,11 +26,3 @@ export const fetchHeaderMenu = () => async dispatch => {
   const responce = await myJson.get("/headermenu.json");
   dispatch({ type: "FETCH_HEADERMENU", payload: responce.data.headermenu });
 };
-
-export const selectItemMenu = id => {
-  return {
-    // Return an action
-    type: "ITEMMENU_SELECTED",
-    payload: id
-  };
-};

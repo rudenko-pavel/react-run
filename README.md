@@ -715,7 +715,7 @@ export const fetchHeaderMenu = () => async dispatch =>{
 	}
 
 ## **************************************************************************************************** ##
-   *** Add `selectItem` to HeaderMenu *** 
+   *** Add `selectItem` to HeaderMenu ***  - Look up
 ## **************************************************************************************************** ##
 
 62. Add `HashRouter`:
@@ -729,5 +729,31 @@ export const fetchHeaderMenu = () => async dispatch =>{
 	`<BrowserRouter></BrowserRouter>`
 
 ## **************************************************************************************************** ##
-   *** Add `HashRouter` ***  
+   *** Add `HashRouter` ***   - Look up
 ## **************************************************************************************************** ##
+
+63. Edit `src/component/HeaderMenu/HeaderMenu.js`:
+	## Вместо <Link> - <NavLink>
+	import { NavLink } from "react-router-dom";
+	...
+	return (
+        <NavLink
+          exact
+          to={headermenu.link}
+          className="ui button"
+          key={headermenu.id}
+          activeClassName="blue basic"
+        >
+          {headermenu.name}
+        </NavLink>
+		
+64. Edit `src/component/HeaderMenu.js`:
+		## убираем onClick() и  `this.props.selectItemMenu`, `menuselected` , `currentItemMenu`
+
+65. Delete `src/reducers/menuselectedReducer.js`
+
+
+## **************************************************************************************************** ##
+   *** change css for Active Link ***  - Look up
+## **************************************************************************************************** ##
+
