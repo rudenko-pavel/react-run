@@ -7,10 +7,9 @@ import { fetchJoggings } from "../../actions";
 import RunCity from "../RunCity/RunCity";
 
 class JoggingsList extends Component {
-  componentDidMount() {
-    this.props.fetchJoggings();
+  componentDidMount(){
+    fetchJoggings();
   }
-
   secondsToFullTime = timeInSeconds => {
     const hours = `00${Math.floor(timeInSeconds / 60 / 60)}`.slice(-2);
     const minutes = `00${Math.floor(timeInSeconds / 60) % 60}`.slice(-2);
@@ -42,7 +41,9 @@ class JoggingsList extends Component {
   };
 
   renderList() {
-    const reverceJoggings = this.props.joggings.reverse();
+    console.log("JoggingsList: ", this.props);
+    return <tr><td>888</td></tr>
+   /* const reverceJoggings = this.props.joggings.reverse();
     return reverceJoggings.map(jogging => {
       return (
         <tr key={jogging.id} className="one-item">
@@ -63,7 +64,7 @@ class JoggingsList extends Component {
           </td>
         </tr>
       );
-    });
+    });*/
   }
 
   render() {
@@ -89,9 +90,8 @@ class JoggingsList extends Component {
 }
 
 const mapStateToProps = state => {
-  // see to `src/reducers/index.js`
   return {
-    joggings: state.joggings
+    state: state.state
   };
 };
 

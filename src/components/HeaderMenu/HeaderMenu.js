@@ -1,18 +1,14 @@
+/* eslint-disable react/prop-types */
 import "./HeaderMenu.scss";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { fetchHeaderMenu } from "../../actions";
-
 class HeaderMenu extends Component {
-  componentDidMount() {
-    this.props.fetchHeaderMenu();
-  }
-
   renderList() {
-    return this.props.headermenu.map(headermenu => {
+    const { state } = this.props;
+    return state.headermenu.map(headermenu => {
       return (
         <NavLink
           exact
@@ -28,7 +24,6 @@ class HeaderMenu extends Component {
   }
 
   render() {
-    // console.log("HeaderMenu(fetchHeaderMenu)", this.props.headermenu);
     return (
       <div className="row">
         <div className="column HeaderMenu">
@@ -42,10 +37,8 @@ class HeaderMenu extends Component {
 const mapStateToProps = state => {
   // see to `src/reducers/index.js`
   return {
-    headermenu: state.headermenu
+    state: state.state
   };
 };
 
-export default connect(mapStateToProps, {
-  fetchHeaderMenu // see to `src/actions/index.js`
-})(HeaderMenu);
+export default connect(mapStateToProps)(HeaderMenu);

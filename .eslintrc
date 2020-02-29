@@ -16,6 +16,7 @@
   "env": { "jest": true },
   "rules": {
     // "semi": 0, //OK: don’t use the semicolon at the end of the every statement (IMHO really annoying);
+    "no-console": "off",
     "camelcase": 0,
     "react/prefer-stateless-function": 0, // todo TURN IT ON
     "import/no-named-as-default": 0, // todo TURN IT ON

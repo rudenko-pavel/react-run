@@ -144,6 +144,19 @@
 	{"id": 142, "cityId": 1,  "date":"1579568400", "distance":10230,"time":4756, "slides": 0 , "isCompetition": false , "parts":[423,444,465,455,444,482,470,495,474,471]},
 	{"id": 143, "cityId": 1,  "date":"1579741200", "distance":7150, "time":3116, "slides": 0 , "isCompetition": false , "parts":[406,425,435,422,445,456,456]},
 	{"id": 144, "cityId": 1,  "date":"1579914000", "distance":7220, "time":3149, "slides": 0 , "isCompetition": false , "parts":[342,426,450,441,467,456,464]},
-	{"id": 145, "cityId": 1,  "date":"1580173200", "distance":8060, "time":3735, "slides": 0 , "isCompetition": false , "parts":[419,444,448,475,468,491,473,486]}
+	{"id": 145, "cityId": 1,  "date":"1580173200", "distance":8060, "time":3735, "slides": 0 , "isCompetition": false , "parts":[419,444,448,475,468,491,473,486]}, 
+	{"id": 146, "cityId": 1,  "date":"1580346000", "distance":8050, "time":3579, "slides": 0 , "isCompetition": false , "parts":[402,441,437,450,450,464,457,458]},
+	{"id": 147, "cityId": 1,  "date":"1580518800", "distance":10060,"time":4317, "slides": 0 , "isCompetition": false , "parts":[407,441,439,419,445,420,414,420,433,448]},
+	{"id": 148, "cityId": 1,  "date":"1580778000", "distance":8170, "time":3798, "slides": 0 , "isCompetition": false , "parts":[436,474,449,475,467,495,466,465]},
+	{"id": 149, "cityId": 1,  "date":"1580950800", "distance":8080, "time":3863, "slides": 0 , "isCompetition": false , "parts":[439,482,485,478,484,481,489,489]},
+	{"id": 150, "cityId": 1,  "date":"1581123600", "distance":8080, "time":3455, "slides": 0 , "isCompetition": false , "parts":[393,412,433,422,440,434,436,451]},
+	{"id": 151, "cityId": 1,  "date":"1581382800", "distance":8050, "time":3895, "slides": 0 , "isCompetition": false , "parts":[469,499,492,506,492,489,468,457]},
+	{"id": 152, "cityId": 1,  "date":"1581555600", "distance":8090, "time":3787, "slides": 0 , "isCompetition": false , "parts":[437,477,458,474,475,483,466,471]},
+	{"id": 153, "cityId": 1,  "date":"1581728400", "distance":10110,"time":4679, "slides": 0 , "isCompetition": false , "parts":[419,455,467,452,469,477,485,483,454,470]},
+	{"id": 154, "cityId": 1,  "date":"1581987600", "distance":8280, "time":3840, "slides": 0 , "isCompetition": false , "parts":[428,461,466,461,467,471,485,469]},
+	{"id": 155, "cityId": 1,  "date":"1582333200", "distance":8100, "time":3635, "slides": 0 , "isCompetition": false , "parts":[413,434,454,442,468,468,437,469]},
+	{"id": 156, "cityId": 1,  "date":"1582592400", "distance":8270, "time":3803, "slides": 0 , "isCompetition": false , "parts":[462,463,469,456,467,465,453,449]},
+	{"id": 157, "cityId": 1,  "date":"1582765200", "distance":8320, "time":3738, "slides": 0 , "isCompetition": false , "parts":[445,441,454,443,455,443,466,441]},
+	{"id": 158, "cityId": 1,  "date":"1582938000", "distance":8260, "time":3603, "slides": 0 , "isCompetition": false , "parts":[407,431,441,421,445,453,445,441]}
   ]
 }
