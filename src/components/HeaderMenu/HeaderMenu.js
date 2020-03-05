@@ -1,44 +1,45 @@
-/* eslint-disable react/prop-types */
 import "./HeaderMenu.scss";
 
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-class HeaderMenu extends Component {
-  renderList() {
-    const { state } = this.props;
-    return state.headermenu.map(headermenu => {
+import { setValue } from "../../actions";
+import headerMenuItems from "../../configs/headerMenuConfig";
+import joggingsListItems from "../../configs/joggingsListConfig";
+
+const HeaderMenu = () => {
+  const { headermenu } = headerMenuItems;
+  const dispatch = useDispatch();
+  dispatch(setValue("joggings", joggingsListItems.joggings));
+
+  /**
+   * Returns hed menu.
+   * @param {Object[]} headermenu - array of objects (e.g. { id: 1, name: "about", link: "/" }).
+   */
+  function renderList() {
+    return headermenu.map(headerMenuItem => {
       return (
         <NavLink
           exact
-          to={headermenu.link}
+          to={headerMenuItem.link}
           className="ui button"
-          key={headermenu.id}
+          key={headerMenuItem.id}
           activeClassName="blue basic"
         >
-          {headermenu.name}
+          {headerMenuItem.name}
         </NavLink>
       );
     });
   }
 
-  render() {
-    return (
-      <div className="row">
-        <div className="column HeaderMenu">
-          <div className="ui basic buttons">{this.renderList()}</div>
-        </div>
+  return (
+    <div className="row">
+      <div className="column HeaderMenu">
+        <div className="ui basic buttons">{renderList()}</div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  // see to `src/reducers/index.js`
-  return {
-    state: state.state
-  };
+    </div>
+  );
 };
 
-export default connect(mapStateToProps)(HeaderMenu);
+export default HeaderMenu;

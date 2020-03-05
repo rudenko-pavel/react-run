@@ -1,3 +1,4 @@
 export const FETCH_CITY = "FETCH_CITY";
 export const FETCH_HEADERMENU = "FETCH_HEADERMENU";
 export const FETCH_JOGGINGS = "FETCH_JOGGINGS";
+export const SET_VALUE = "SET_VALUE";

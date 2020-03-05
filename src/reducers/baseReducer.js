@@ -1,12 +1,12 @@
-import { FETCH_CITY, FETCH_HEADERMENU, FETCH_JOGGINGS } from "../actions/types";
+import {
+  FETCH_CITY,
+  FETCH_HEADERMENU,
+  FETCH_JOGGINGS,
+  SET_VALUE
+} from "../actions/types";
 
 export const initialState = {
-  theme: "green",
-  headermenu: [
-    { id: 1, name: "about", link: "/" },
-    { id: 2, name: "joggings", link: "/joggings" },
-    { id: 3, name: "strava", link: "/strava" }
-  ]
+  theme: "green"
 };
 
 export default (state = initialState, action) => {
@@ -16,10 +16,15 @@ export default (state = initialState, action) => {
     case FETCH_HEADERMENU:
       return action.payload;
     case FETCH_JOGGINGS:
-      console.log("FETCH_JOGGINGS")
+      console.log("FETCH_JOGGINGS");
       const newState = { ...state };
       newState.sss = action.payload;
       return newState;
+    case SET_VALUE:
+      const { name, value } = action.payload;
+      const newItemState = { ...state };
+      newItemState[name] = value;
+      return newItemState;
     default:
       return state;
   }
