@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
       const { name, value } = action.payload;
       const newItemState = { ...state };
       newItemState[name] = value;
-      return { ...state, newItemState };
+      return newItemState;
     default:
       return state;
   }

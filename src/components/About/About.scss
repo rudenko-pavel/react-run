@@ -1,1 +1,17 @@
 @import "../../css/middleware";
+
+.summaryTable{
+    tr{
+        th:nth-child(1),
+        td:nth-child(1){
+            text-align: right ;
+            width: 50%;
+        }
+    }
+    .ant-typography{
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 500;
+        &.green-label { background-color: $lightgreen-color; }
+    }
+}

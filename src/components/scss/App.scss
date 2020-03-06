@@ -1,0 +1,32 @@
+@import "../../css/middleware";
+
+.App{
+    position: relative;
+    min-height: 100vh;
+    .ant-layout{
+        position: relative;
+        min-height: 100vh;
+        .header{
+            position: fixed;
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+            background-color: $white-color;
+            left: 0;
+            border-bottom: 1px dotted $red-color;
+        }
+        .site-layout{
+            padding: 0 50px;
+            margin-top: 64px;
+        }
+        .footer{
+            text-align: center;
+            border-top: 1px dotted $red-color;
+        }
+        &.container{
+            background-color: white !important;
+            border-left: 1px solid $grey-color;
+            border-right: 1px solid $grey-color;
+        }
+    }
+}

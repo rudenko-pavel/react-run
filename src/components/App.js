@@ -1,5 +1,6 @@
 import "./scss/App.scss";
 
+import { Layout } from "antd";
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 
@@ -8,16 +9,23 @@ import HeaderMenu from "./HeaderMenu/HeaderMenu";
 import JoggingsList from "./JoggingsList/JoggingsList";
 import Strava from "./Strava/Strava";
 
+const { Header, Content, Footer } = Layout;
+
 const App = () => {
   return (
-    <div className="ui container App">
+    <div className="App">
       <HashRouter>
-        <div>
-          <HeaderMenu />
-          <Route path="/" exact component={About} />
-          <Route path="/joggings" component={JoggingsList} />
-          <Route path="/strava" component={Strava} />
-        </div>
+        <Layout className="container">
+          <Header className="header">
+            <HeaderMenu />
+          </Header>
+          <Content className="site-layout">
+            <Route path="/" exact component={About} />
+            <Route path="/joggings" exact component={JoggingsList} />
+            <Route path="/strava" exact component={Strava} />
+          </Content>
+          <Footer className="footer">Joggings: Rudenko Pavel</Footer>
+        </Layout>
       </HashRouter>
     </div>
   );

@@ -1,12 +1,12 @@
+import { Table } from "antd";
 import PropTypes from "prop-types";
 import React from "react";
 
 import joggingConfig from "../../configs/joggingConfig";
-import OneItem from "./OneItem";
 
 const JoggingLogic = props => {
   const { joggings } = props;
-  const { arrayMonth, theadTable, nameTable, cities } = joggingConfig;
+  const { arrayMonth, theadTable, cities } = joggingConfig;
 
   /**
    * Returns the time, which was get from timeInSeconds.
@@ -32,16 +32,6 @@ const JoggingLogic = props => {
   }
 
   /**
-   * Returns head to table.
-   * @param {Object[]} thead - array of objects (e.g. { id: 1, name: "#" }).
-   */
-  function showTableHead(thead) {
-    return thead.map(item => {
-      return <th key={item.id}>{item.name}</th>;
-    });
-  }
-
-  /**
    * Returns name of City .
    * @param {number} val - number, which is key in Array[{Object}]. ({ id: 1, name: "Kyiv" })
    */
@@ -50,32 +40,40 @@ const JoggingLogic = props => {
     return result.name;
   }
 
+  /**
+   * Returns formatted distance .
+   * @param {number} val - number
+   */
+  function formattedDistance(val) {
+    return new Intl.NumberFormat("en-EN").format(val);
+  }
+
   function renderList() {
-    const reverceJoggings = joggings.reverse();
-    return reverceJoggings.map(jogging => {
-      return (
-        <OneItem
-          key={jogging.id}
-          id={jogging.id}
-          date={timestampToDate(jogging.date)}
-          distance={jogging.distance}
-          time={secondsToFullTime(jogging.time)}
-          city={showCityName(jogging.cityId)}
-        />
-      );
-    });
+    return joggings
+      .map(jogging => {
+        return {
+          id: `# ${jogging.id}`,
+          date: timestampToDate(jogging.date),
+          distance: formattedDistance(jogging.distance),
+          time: secondsToFullTime(jogging.time),
+          cityId: showCityName(jogging.cityId)
+        };
+      })
+      .reverse();
   }
 
   return (
-    <table className="ui celled striped table">
-      <thead>
-        <tr className="one-item">
-          <th colSpan="5">{nameTable}</th>
-        </tr>
-        <tr className="one-item">{showTableHead(theadTable)}</tr>
-      </thead>
-      <tbody>{renderList()}</tbody>
-    </table>
+    <Table
+      className="joggings"
+      columns={theadTable}
+      dataSource={renderList()}
+      rowKey={record => record.id}
+      pagination={{
+        defaultPageSize: 10,
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50", "100", `${joggings.length}`]
+      }}
+    />
   );
 };
 
